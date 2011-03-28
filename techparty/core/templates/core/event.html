@@ -1,0 +1,51 @@
+{%extends 'core/base.html'%}
+{% load comments %}
+{%block title%}{{event.name}}|珠三角技术沙龙 -- 是你的沙龙{%endblock%}
+{%block extrastyle%}{{block.super}}
+
+{%endblock%}
+{%block path%}
+&rsaquo;&nbsp;{{event.name}}
+{%endblock%}
+{%block content%}
+{%if message %}
+<ul class="messagelist">
+<li>{{message}}</li>
+</ul>
+{%endif%}
+<h1>{{event.name}}</h1>
+<div>
+    <div class="info">
+    <form method="POST" action="{% url core.views.enroll %}">
+        <b>举行时间:</b><span>{{event.start_time}}</span>&nbsp;|&nbsp;
+        <b>标签:</b><span>{{event.tags}}</span>&nbsp;|&nbsp;
+        
+    	{% csrf_token %}
+    	<input type="hidden" name="eid" value="{{event.pk}}"/>   
+    	<input type="submit" value="我要参加！" />
+    </form>
+    </div>
+    <div class="description">
+    {{event.intro|safe|linebreaks}}
+    </div>
+</div>
+<h2>主题</h2>
+{% for topic in topics %}
+
+{% endfor %}
+<h2>他们会来参加</h2>
+{% for enroll in enrolls %}
+
+{% endfor %}
+<h2>活动图片</h2>
+{% for photo in photos %}
+
+{% endfor %}
+<h2>七嘴八舌</h2>
+{% get_comment_list for event as comment_list %}
+{% for comment in comment_list %}
+    
+{% endfor %}
+
+
+{%endblock%}

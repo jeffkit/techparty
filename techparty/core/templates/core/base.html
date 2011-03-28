@@ -1,0 +1,19 @@
+{%extends 'admin/base_site.html'%}
+{% load adminmedia %}
+	{%block extrastyle%}{{block.super}}
+    <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+    <script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
+    <script type="text/javascript">window.__admin_media_prefix__ = "{% admin_media_prefix %}";</script>
+	{{form.media}}
+    <style type="text/css">
+    .info {color:#CC7700;} 
+    </style> 
+	{%endblock%}
+{% block branding %}
+<h1 id="site-name">珠三角技术沙龙 -- 是你的沙龙</h1>
+{% endblock %}
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="/">首页</a>{%block path%}{%endblock%}
+</div>
+{% endblock %}
+    

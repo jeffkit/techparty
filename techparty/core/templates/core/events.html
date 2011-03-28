@@ -1,0 +1,16 @@
+{%extends 'core/base.html'%}
+{%block title%}活动|珠三角技术沙龙 -- 是你的沙龙{%endblock%}
+{%block content%}
+{%for event in events%}
+<h2><a href="{%url core.views.event event.pk %}">{{event.name}}</a></h2>
+<div>
+    <div class="info">
+        <b>举行时间:</b><span>{{event.start_time}}</span>&nbsp;|&nbsp;
+        <b>标签:</b><span>{{event.tags}}</span>&nbsp;|&nbsp;
+    </div>
+    <div class="description">
+    {{event.intro|safe|linebreaks}}
+    </div>
+</div>
+{%endfor%}
+{%endblock%}
