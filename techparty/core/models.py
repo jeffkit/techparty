@@ -115,7 +115,7 @@ class Photo(ImageModel):
         verbose_name_plural = u'相片'
 
     class IKOptions:
-        spec_module = 'core.specs'
+        spec_module = 'techparty.core.photo_specs'
         cache_dir = 'cache'
         image_field = 'original_image'
         save_count_as = 'num_views'
