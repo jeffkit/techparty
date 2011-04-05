@@ -2,3 +2,6 @@
 *.pyc
 build
 *.db
+media/cache
+media/photos
+techparty/local_settings.py

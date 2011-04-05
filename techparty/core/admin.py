@@ -3,6 +3,16 @@
 from django.contrib import admin
 from core import models
 
+class UserProfileAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(models.UserProfile,UserProfileAdmin)
+
+class UserLinkAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(models.UserLink,UserLinkAdmin)
+
 class EventAdmin(admin.ModelAdmin):
     list_display = ['name','alias','start_time','creator','create_time','tags']
     list_filter = ['start_time','create_time']
@@ -33,6 +43,7 @@ admin.site.register(models.LiveMessage,LiveMessageAdmin)
 
 class PhotoAdmin(admin.ModelAdmin):
     pass
+
 
 admin.site.register(models.Photo,PhotoAdmin)
 

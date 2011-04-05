@@ -4,6 +4,42 @@ from django.contrib.auth.models import User
 from tagging.fields import TagField
 from imagekit.models import ImageModel
 
+class UserProfile(models.Model):
+    user = models.ForeignKey(User,verbose_name=u'用户')
+    description = models.TextField(u'简介')
+    is_lecturer = models.BooleanField(u'讲师')
+    avatar = models.URLField(u'头像',null=True,blank=True) # 第三方帐号的头像链接
+    custom_avatar = models.ImageField(u'自定义头像',upload_to='avatars',null=True,blank=True) # 自定义头像,上传时将该头像转换几种size。
+    tags = TagField(u'标签')
+
+    def avatar_normal(self):
+        if not self.custom_avatar:
+            return self.avatar
+        else:
+            pass # 返回相应size的头像
+
+    def __unicode__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = u'用户资料'
+        verbose_name_plural = u'用户资料'
+
+class UserLink(models.Model):
+    """
+    用户连接
+    """
+    user = models.ForeignKey(User,verbose_name=u'用户')
+    link = models.URLField(u'链接')
+    title = models.CharField(u'标题',max_length=50)
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = u'用户链接'
+        verbose_name_plural = u'用户链接'
+
 class Event(models.Model):
     """
     一次沙龙的活动。
@@ -66,7 +102,7 @@ class Photo(ImageModel):
     event = models.ForeignKey(Event,verbose_name=u'活动')
     name = models.CharField(u'名称',max_length=50)
     description = models.CharField(u'描述',max_length=140,blank=True,null=True)
-    original_image = models.ImageField(u'原图',upload_to='photos')
+    original_image = models.ImageField(u'原图',upload_to='photos/%Y/%m/%d')
     num_views = models.PositiveIntegerField(u'查看次数',editable=False,default=0)
     add_time = models.DateTimeField(u'上传时间',auto_now_add=True)
     add_by = models.ForeignKey(User,verbose_name=u'上传者')
@@ -80,7 +116,7 @@ class Photo(ImageModel):
 
     class IKOptions:
         spec_module = 'core.specs'
-        cache_dir = 'photos'
+        cache_dir = 'cache'
         image_field = 'original_image'
         save_count_as = 'num_views'
 
