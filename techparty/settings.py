@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'imagekit',
     'social_auth',
     'attachments',
+    'example',
     'techparty.core',
 )
 

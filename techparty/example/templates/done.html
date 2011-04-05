@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block heading %}Logged in!{% endblock %}
+
+{% block content %}
+<div>
+  <h3>User data:</h3>
+  <table>
+    <tr class="odd"><th>Id:</th> <td>{{ user.id }}</td></tr>
+    <tr class="even"><th>Username:</th> <td>{{ user.username }}</td></tr>
+    <tr class="odd"><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+    <tr class="even"><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
+    <tr class="odd"><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
+  </table>
+</div>
+
+<div>
+  <h3>Associate new OAuth credentials:</h3>
+  <ul>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "twitter" %}">Twitter</a>
+      {% if twitter %}<span class="disconnect">(<a href="{% url disconnect "twitter" %}">disconnect</a>)</span>{% endif %}
+    </li>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "facebook" %}">Facebook</a>
+      {% if facebook %}<span class="disconnect">(<a href="{% url disconnect "facebook" %}">disconnect</a>)</span>{% endif %}
+    </li>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "linkedin" %}">LinkedIn</a>
+      {% if linkedin %}<span class="disconnect">(<a href="{% url disconnect "linkedin" %}">disconnect</a>)</span>{% endif %}
+    </li>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "orkut" %}">Orkut</a>
+      {% if orkut %}<span class="disconnect">(<a href="{% url disconnect "orkut" %}">disconnect</a>)</span>{% endif %}
+    </li>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "google-oauth" %}">Google OAuth</a>
+      {% if google_oauth %}<span class="disconnect">(<a href="{% url disconnect "google-oauth" %}">disconnect</a>)</span>{% endif %}
+    </li>
+  </ul>
+
+  <h3>Associate new OAuth2 credentials:</h3>
+  <ul>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "google-oauth2" %}">Google OAuth2</a>
+      {% if google_oauth2 %}<span class="disconnect">(<a href="{% url disconnect "google-oauth2" %}">disconnect</a>)</span>{% endif %}
+    </li>
+  </ul>
+
+  <h3>Associate new OpenID credentials:</h3>
+  <ul>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "google" %}">Google OpenID</a>
+      {% if google %}<span class="disconnect">(<a href="{% url disconnect "google" %}">disconnect</a>)</span>{% endif %}
+    </li>
+    <li>
+      <a rel="nofollow" href="{% url associate_begin "yahoo" %}">Yahoo</a>
+      {% if yahoo %}<span class="disconnect">(<a href="{% url disconnect "yahoo" %}">disconnect</a>)</span>{% endif %}
+    </li>
+    <li>
+      <form action="{% url associate_begin "livejournal" %}" method="post">{% csrf_token %}
+        <div>
+          <label for="openid_lj_user">LiveJournal user
+            {% if livejournal %}(<span class="disconnect"><a href="{% url disconnect "livejournal" %}">disconnect</a>)</span>{% endif %}
+          </label>
+          <input id="openid_lj_user" type="text" value="" name="openid_lj_user" />
+          <input type="submit" value="Login"/>
+        </div>
+      </form>
+    </li>
+    <li>
+      <form action="{% url associate_begin "openid" %}" method="post">{% csrf_token %}
+        <div>
+          <label for="openid_identifier">Other provider:</label>
+          <input id="openid_identifier" type="text" value="" name="openid_identifier" />
+          <input type="submit" />
+        </div>
+      </form>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <a rel="nofollow" class="logout" href="/logout/">Logout</a>
+</div>
+{% endblock %}
