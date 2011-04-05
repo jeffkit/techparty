@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # (r'^techparty/', include('techparty.foo.urls')),
+    (r'', include('social_autl.urls')),
     (r'site_media/(?P<path>.*)','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
 
     # Uncomment the next line to enable the admin:
