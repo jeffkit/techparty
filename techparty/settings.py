@@ -1,5 +1,6 @@
 # Django settings for techparty project.
 import os.path
+from tp_logging import logger
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -116,6 +117,7 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuthBackend',
     'django.contrib.auth.backends.ModelBackend', # default backends
 )
+
 
 try:
     from local_settings import *
