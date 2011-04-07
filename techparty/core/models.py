@@ -155,13 +155,13 @@ class LiveMessage(models.Model):
 
 ######## signals ###########
 def facebook_extra_values(sender,user,response,details,**kwargs):
-    log.debug(response)
     user.get_profile().avatar = 'http://graph.facebook.com/%s/picture?type=large'%response.get('id')
     user.save()
     return True
 
 def twitter_extra_values(sender,user,response,details,**kwargs):
-    log.debug(response)
+    user.get_profile().avatar = response.get('profile_image_url')
+    user.save()
     return True
 
 pre_update.connect(facebook_extra_values,sender=FacebookBackend)
