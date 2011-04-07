@@ -118,6 +118,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default backends
 )
 
+LOGIN_REDIRECT_URL = '/'
 
 try:
     from local_settings import *
