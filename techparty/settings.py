@@ -1,6 +1,5 @@
 # Django settings for techparty project.
 import os.path
-from tp_logging import logger
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

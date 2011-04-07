@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from tagging.fields import TagField
 from imagekit.models import ImageModel
+from social_auth.signals import pre_update
+from social_auth.backends.facebook import FacebookBackend
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User,verbose_name=u'用户')
@@ -149,3 +151,8 @@ class LiveMessage(models.Model):
         verbose_name_plural = u'直播消息'
 
 
+######## signals ###########
+def facebook_extra_values(sender,user,response,details,**kwargs):
+    return True
+
+pre_update.connect(facebook_extra_values,sender=FacebookBackend)
