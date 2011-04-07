@@ -5,6 +5,7 @@ from tagging.fields import TagField
 from imagekit.models import ImageModel
 from social_auth.signals import pre_update
 from social_auth.backends.facebook import FacebookBackend
+from social_auth.backends.twitter import TwitterBackend
 from logger import log
 
 class UserProfile(models.Model):
@@ -155,6 +156,14 @@ class LiveMessage(models.Model):
 ######## signals ###########
 def facebook_extra_values(sender,user,response,details,**kwargs):
     log.debug(response)
+    user.get_profile().avatar = 'http://graph.facebook.com/%s/picture?type=large'%response.get('id')
+    user.save()
+    return True
+
+def twitter_extra_values(sender,user,response,details,**kwargs):
+    log.debug(response)
     return True
 
 pre_update.connect(facebook_extra_values,sender=FacebookBackend)
+pre_update.connect(twitter_extra_values,sender=TwitterBackend)
+
