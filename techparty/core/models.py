@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 from tagging.fields import TagField
 from imagekit.models import ImageModel
 from social_auth.signals import pre_update
+from django.db.models.signals import post_save
 from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends.twitter import TwitterBackend
 from logger import log
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User,verbose_name=u'用户')
-    description = models.TextField(u'简介')
+    description = models.TextField(u'简介',null=True,blank=True)
     is_lecturer = models.BooleanField(u'讲师')
     avatar = models.URLField(u'头像',null=True,blank=True) # 第三方帐号的头像链接
     custom_avatar = models.ImageField(u'自定义头像',upload_to='avatars',null=True,blank=True) # 自定义头像,上传时将该头像转换几种size。
@@ -154,16 +155,45 @@ class LiveMessage(models.Model):
 
 
 ######## signals ###########
-def facebook_extra_values(sender,user,response,details,**kwargs):
-    user.get_profile().avatar = 'http://graph.facebook.com/%s/picture?type=large'%response.get('id')
-    user.save()
-    return True
 
-def twitter_extra_values(sender,user,response,details,**kwargs):
-    user.get_profile().avatar = response.get('profile_image_url')
-    user.save()
+def create_user_profile(sender,instance,created,**kwargs):
+    """
+    创建用户资料
+    """
+    log.debug('create user profile')
+    def get_profile():
+        try:
+            return instance.get_profile()
+        except:
+            log.error('can not get user profile')
+            return None
+
+    if not get_profile():
+        profile = UserProfile(user=instance,description=' ',is_lecturer=False)
+        profile.save()
+
+
+post_save.connect(create_user_profile,sender=User)
+
+def facebook_extra_values(sender,user,response,details,**kwargs):
+    """
+    连接facebook时，设置用户的头像为facebook头像
+    """
+    profile = user.get_profile()
+    profile.avatar = 'http://graph.facebook.com/%s/picture?type=large'%response.get('id')
+    profile.save()
     return True
 
 pre_update.connect(facebook_extra_values,sender=FacebookBackend)
+
+def twitter_extra_values(sender,user,response,details,**kwargs):
+    """
+    连接twitter时，设置用户的头像为twitter头像
+    """
+    profile = user.get_profile()
+    profile.avatar = response.get('profile_image_url')
+    profile.save()
+    return True
+
 pre_update.connect(twitter_extra_values,sender=TwitterBackend)
 
