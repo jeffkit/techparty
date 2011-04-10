@@ -23,6 +23,10 @@ class UserProfile(models.Model):
         else:
             pass # 返回相应size的头像
 
+    def avatar_profile(self):
+        # 返回profile页面用的头像，应属中等size图片,facebook为200×200，twitter为128×128
+        pass
+
     def __unicode__(self):
         return self.user.username
 

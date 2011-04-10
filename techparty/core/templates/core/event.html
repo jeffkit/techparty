@@ -16,23 +16,29 @@
 <h1>{{event.name}}</h1>
 <div>
     <div class="info">
-    <form method="POST" action="{% url core.views.enroll %}">
         <b>举行时间:</b><span>{{event.start_time}}</span>&nbsp;|&nbsp;
         <b>标签:</b><span>{{event.tags}}</span>&nbsp;|&nbsp;
         
-    	{% csrf_token %}
-    	<input type="hidden" name="eid" value="{{event.pk}}"/>   
-    	<input type="submit" value="我要参加！" />
-    </form>
     </div>
     <div class="description">
     {{event.intro|safe|linebreaks}}
     </div>
+
+    {% if not is_enroll %}
+    <div id="enroll_button">
+        <form method="POST" action="/enroll/{{event.id}}/">
+    	    {% csrf_token %}
+    	    <input type="hidden" name="eid" value="{{event.pk}}"/>   
+            <input type="hidden" name="comment" value=" "/>
+        	<input type="submit" value="我要参加！" />
+        </form>
+    </div>
+    {% endif %}
 </div>
 <h2>主题</h2>
 {% for topic in topics %}
     <ul id="topic_list">
-        <li class="topic">{{topic.title}}</li>
+        <li class="topic"><a href="/topic/{{topic.id}}/">{{topic.title}}</a></li>
     </ul>
 {% endfor %}
 {% if enrolls %}
@@ -40,7 +46,10 @@
 {% for enroll in enrolls %}
 <div id="enroll_list">
     <div class="enroll">
-        <img src="{{enroll.user.get_profile.avatar_normal}}" alt="{{enroll.user.username}}" title="{{enroll.user.username}}" width="100" height="100"/>
+        <a href="/member/{{enroll.user.id}}/">
+            <img src="{{enroll.user.get_profile.avatar_normal}}" alt="{{enroll.user.username}}" title="{{enroll.user.username}}" width="48" height="48"/>
+        </a>
+        <p><a href="/member/{{enroll.user.id}}/">{{enroll.user.username}}</a></p>
     </div>
 </div>
 {% endfor %}
@@ -51,7 +60,10 @@
 {% for photo in photos %}
 <div id="event_photos">
 	<div class="event_photo">
-        <img src="{{photo.thumbnail_image.url}}" alt="{{photo.name}}" />
+        <a href="/member/{{photo.add_by.id}}">
+            <img src="{{photo.thumbnail_image.url}}" alt="{{photo.name}}" />
+        </a>
+        <p>由<a href="/member/{{photo.add_by.id}}/">{{photo.add_by.username}}</a>添加</p>
 	</div>
 </div>
 
