@@ -53,16 +53,17 @@
 </div>
 {% if enrolls %}
 <h3>他们会来参加</h3>
+<ul class="media-grid">
 {% for enroll in enrolls %}
-<div class="media-grid">
-  <a href="/member/{{enroll.user.id}}/">
-    <img src="{{enroll.user.get_profile.avatar_normal}}"
-         alt="{{enroll.user.username}}" class="thumbnail"
-         title="{{enroll.user.username}}" width="90" height="90"/>
-  </a>
-</div>
-
+  <li>
+    <a href="/member/{{enroll.user.id}}/">
+      <img src="{{enroll.user.get_profile.avatar_normal}}"
+           alt="{{enroll.user.username}}" class="thumbnail"
+           title="{{enroll.user.username}}" width="90" height="90"/>
+    </a>
+  </li>
 {% endfor %}
+</ul>
 {% endif %}
 
 {% if photos %}
