@@ -10,7 +10,8 @@ def index(request):
     """
     网站首页视图
     """
-    pass
+    return render_to_response('core/index.html',
+                              context_instance=RequestContext(request))
 
 def events(request):
     """

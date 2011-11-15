@@ -1,16 +1,43 @@
 {%extends 'core/base.html'%}
 {%block title%}活动|珠三角技术沙龙 -- 是你的沙龙{%endblock%}
+	  {%block menu%}
+          <ul class="nav">
+            <li><a href="/">首页</a></li>
+            <li class="active"><a href="#">活动</a></li>
+            <li><a href="/lecturers/">讲师</a></li>
+            <li><a href="/topics/">主题</a></li>
+            <li><a href="http://techparty.org">博客</a></li>
+            <li><a href="/about/">关于</a></li>
+          </ul>
+	  {%endblock%}
+
 {%block content%}
-{%for event in events%}
-<h2><a href="{%url core.views.event event.pk %}">{{event.name}}</a></h2>
-<div>
-    <div class="info">
-        <b>举行时间:</b><span>{{event.start_time}}</span>&nbsp;|&nbsp;
-        <b>标签:</b><span>{{event.tags}}</span>&nbsp;|&nbsp;
-    </div>
-    <div class="description">
-    {{event.intro|safe|linebreaks}}
-    </div>
-</div>
-{%endfor%}
-{%endblock%}
+	  <div class="row">
+	    <div class="span16">
+	      <section id="typography">
+		<div class="page-header">
+		  <h1>线下活动&nbsp;<small>技术从业人员自我展示的舞台</small></h1>
+		</div>
+		{%for event in events%}
+		<h2><a href="{%url core.views.event event.pk %}">{{event.name}}</a></h2>
+		<div class="span15">
+		  
+		  <div>
+		    <b>举行时间:</b>
+		    <span>
+		      <a href="{%url core.views.event event.pk %}">{{event.start_time}}</a>
+		    </span>&nbsp;&nbsp;
+		    {%for tag in event.tags_array%}
+		    <span class="label success">{{tag}}</span>
+		    {%endfor%}
+		  </div>
+		  <br/>
+		  <div>
+		    {{event.intro|safe|linebreaks}}
+		  </div>
+		</div>
+		{%endfor%}
+	      </section>
+	    </div>
+	  </div>
+	  {%endblock%}

@@ -66,6 +66,9 @@ class Event(models.Model):
     def __unicode__(self):
         return self.name
 
+    def tags_array(self):
+        return self.tags.split(' ')
+
     class Meta:
         verbose_name = u'活动'
         verbose_name_plural = u'活动'

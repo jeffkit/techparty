@@ -1,19 +1,96 @@
-{%extends 'admin/base_site.html'%}
-{% load adminmedia %}
-	{%block extrastyle%}{{block.super}}
-    <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
-    <script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
-    <script type="text/javascript">window.__admin_media_prefix__ = "{% admin_media_prefix %}";</script>
-	{{form.media}}
-    <style type="text/css">
-    .info {color:#CC7700;} 
-    </style> 
-	{%endblock%}
-{% block branding %}
-<h1 id="site-name">珠三角技术沙龙 -- 是你的沙龙</h1>
-{% endblock %}
-{% block breadcrumbs %}
-<div class="breadcrumbs"><a href="/">首页</a>{%block path%}{%endblock%}
-</div>
-{% endblock %}
-    
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{%block title%}{%endblock%}--珠三角技术沙龙--是你的沙龙!</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site_media/css/bootstrap-1.4.0.css" rel="stylesheet">
+    <link href="/site_media/css/techparty.css" rel="stylesheet">
+    {%block style%}{%endblock%}
+    {%block script%}{%endblock%}
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  </head>
+
+  <body>
+    {%block navigator%}
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <h3><a href="#">珠三角技术沙龙</a></h3>
+	  {%block menu%}
+          <ul class="nav">
+            <li class="active"><a href="#">首页</a></li>
+            <li><a href="/events/">活动</a></li>
+            <li><a href="/lecturers/">讲师</a></li>
+            <li><a href="/topics/">主题</a></li>
+            <li><a href="http://techparty.org">博客</a></li>
+            <li><a href="/about/">关于</a></li>
+          </ul>
+	  {%endblock%}
+        </div>
+      </div>
+    </div>
+    {%endblock%}
+    {%block container%}
+    <div class="container">
+      {%block content%}
+      <div class="hero-unit">
+        <h1>珠三角技术沙龙</h1>
+	<br/>
+	<p>
+	  珠三角技术沙龙，是泛珠三角地区技术从业人员线上线下的综合技术交流平台，
+	  属于你，属于我。
+	</p>
+
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <h2>线下活动</h2>
+	  <p>
+	    多年来，我们一直坚持每个月举办线下的技术聚会的习惯，从原来的广州阵
+	    营发展到现在在珠三角多个地市全面开花。
+	  </p>
+          <p><a class="btn" href="/events/">前往活动 &raquo;</a></p>
+
+        </div>
+        <div class="span5">
+          <h2>沙龙讲师</h2>
+	  <p>
+	    沙龙发展到今天，不断的涌现出许多优先的讲师，他们是一线的程序员，架
+	    构师，产品经理，甚至是创业者。
+	  </p>
+          <p><a class="btn" href="/lecturers/">前往讲师 &raquo;</a></p>
+       </div>
+        <div class="span5">
+          <h2>沙龙主题</h2>
+	  <p>
+	    经过两年多的积累，沙龙沉淀了大量高质量的技术类主题，涵盖了web、移动
+	    应用开发、游戏等多个领域。
+	  </p>
+          <p><a class="btn" href="/topics/">前往主题 &raquo;</a></p>
+
+        </div>
+      </div>
+      {%endblock%}
+      <footer>
+        <p>&copy; techparty.org 珠三角技术沙龙</p>
+      </footer>
+
+    </div> <!-- /container -->
+    {%endblock%}
+
+  </body>
+</html>

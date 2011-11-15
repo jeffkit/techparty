@@ -1,62 +1,72 @@
 {%extends 'core/base.html'%}
 {% load comments %}
-{%block title%}{{event.name}}|珠三角技术沙龙 -- 是你的沙龙{%endblock%}
-{%block extrastyle%}{{block.super}}
+{%block title%}{{event.name}}{%endblock%}
 
-{%endblock%}
-{%block path%}
-&rsaquo;&nbsp;{{event.name}}
-{%endblock%}
+	  {%block menu%}
+          <ul class="nav">
+            <li><a href="/">首页</a></li>
+            <li class="active"><a href="#">活动</a></li>
+            <li><a href="/lecturers/">讲师</a></li>
+            <li><a href="/topics/">主题</a></li>
+            <li><a href="http://techparty.org">博客</a></li>
+            <li><a href="/about/">关于</a></li>
+          </ul>
+	  {%endblock%}
+
 {%block content%}
 {%if message %}
 <ul class="messagelist">
 <li>{{message}}</li>
 </ul>
 {%endif%}
-<h1>{{event.name}}</h1>
+<h2>{{event.name}}</h2>
 <div>
-    <div class="info">
-        <b>举行时间:</b><span>{{event.start_time}}</span>&nbsp;|&nbsp;
-        <b>标签:</b><span>{{event.tags}}</span>&nbsp;|&nbsp;
-        
-    </div>
-    <div class="description">
+  <div class="span15">
+    <b>举行时间:</b>
+    <span>
+      <a href="#">{{event.start_time}}</a>
+    </span>&nbsp;&nbsp;
+    {%for tag in event.tags_array%}
+    <span class="label success">{{tag}}</span>
+    {%endfor%}
+  </div>
+  <br/>
+    <div>
     {{event.intro|safe|linebreaks}}
     </div>
-
+    <h3>主题</h3>
+    {% for topic in topics %}
+    <ul id="topic_list">
+        <li class="topic"><a href="/topic/{{topic.id}}/">{{topic.title}}</a></li>
+    </ul>
+    {% endfor %}
     {% if not is_enroll %}
     <div id="enroll_button">
         <form method="POST" action="/enroll/{{event.id}}/">
     	    {% csrf_token %}
     	    <input type="hidden" name="eid" value="{{event.pk}}"/>   
             <input type="hidden" name="comment" value=" "/>
-        	<input type="submit" value="我要参加！" />
+        	<input type="submit" class="btn large primary" value="我要参加！" />
         </form>
     </div>
     {% endif %}
 </div>
-<h2>主题</h2>
-{% for topic in topics %}
-    <ul id="topic_list">
-        <li class="topic"><a href="/topic/{{topic.id}}/">{{topic.title}}</a></li>
-    </ul>
-{% endfor %}
 {% if enrolls %}
-<h2>他们会来参加</h2>
+<h3>他们会来参加</h3>
 {% for enroll in enrolls %}
-<div id="enroll_list">
-    <div class="enroll">
-        <a href="/member/{{enroll.user.id}}/">
-            <img src="{{enroll.user.get_profile.avatar_normal}}" alt="{{enroll.user.username}}" title="{{enroll.user.username}}" width="48" height="48"/>
-        </a>
-        <p><a href="/member/{{enroll.user.id}}/">{{enroll.user.username}}</a></p>
-    </div>
+<div class="media-grid">
+  <a href="/member/{{enroll.user.id}}/">
+    <img src="{{enroll.user.get_profile.avatar_normal}}"
+         alt="{{enroll.user.username}}" class="thumbnail"
+         title="{{enroll.user.username}}" width="90" height="90"/>
+  </a>
 </div>
+
 {% endfor %}
 {% endif %}
 
 {% if photos %}
-<h2>活动图片</h2>
+<h3>活动图片</h3>
 {% for photo in photos %}
 <div id="event_photos">
 	<div class="event_photo">
