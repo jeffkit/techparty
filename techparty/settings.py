@@ -110,14 +110,45 @@ INSTALLED_APPS = (
 
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 
+# social login settings
+
 AUTHENTICATION_BACKENDS = (
+    'techparty.auth.WeiboBackend',
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuthBackend',
-    'django.contrib.auth.backends.ModelBackend', # default backends
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    'social_auth.backends.contrib.orkut.OrkutBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.dropbox.DropboxBackend',
+    'social_auth.backends.contrib.flickr.FlickrBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_IMPORT_BACKENDS = (
+    'techparty.auth',
+)
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'weibo', 'facebook',
+                                'google', 'google-oauth')
+
+#LOGIN_URL          = '/login-form/'
 LOGIN_REDIRECT_URL = '/'
+#LOGIN_ERROR_URL    = '/login-error/'
+DEFAULT_REDIRECT = '/'
+
+SOCIAL_AUTH_ERROR_KEY = 'social_errors'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+SOCIAL_AUTH_SESSION_EXPIRATION = False
 
 try:
     from local_settings import *

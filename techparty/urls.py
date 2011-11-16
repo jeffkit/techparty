@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     (r'^events/','core.views.events'),
     (r'^event/(?P<id>\d+)/$','core.views.event'),
     (r'^enroll/(?P<eid>\d+)/$','core.views.enroll'),
+    (r'', include('social_auth.urls')),                       
 )

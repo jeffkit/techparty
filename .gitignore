@@ -6,3 +6,4 @@ media/cache
 media/photos
 techparty/local_settings.py
 *.log
+.ropeproject
