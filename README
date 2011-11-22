@@ -8,3 +8,12 @@ social_auth
 django-imagekit 0.4.0
     PIL
 django-attachments
+
+= 分支记要:
+
++ bg ~ background   背景服务
++ tr ~ talker       讲者展示
++ tc ~ topic        主题展示
++ et ～event         活动展示
++ wl ~ weibowall    微博墙
+
