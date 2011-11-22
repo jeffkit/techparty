@@ -11,8 +11,9 @@ django-attachments
 
 = 分支记要:
 
-+ bg ~ background 背景服务
-+ tr ~ talker   讲者展示
-+ tc ~ topic    主题展示
-+ wl ~ webowall 微博墙
++ bg ~ background   背景服务
++ tr ~ talker       讲者展示
++ tc ~ topic        主题展示
++ et ～event         活动展示
++ wl ~ weibowall    微博墙
 
